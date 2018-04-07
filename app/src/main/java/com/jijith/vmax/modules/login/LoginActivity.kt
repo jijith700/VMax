@@ -43,8 +43,8 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun onLoginSuccess(msg: String) {
-        Utils.Toast(this, msg)
-        Utils.SavePreferences(this, Constants.LOGEDIN, true)
+        Utils.toast(this, msg)
+        Utils.savePreferences(this, Constants.LOGEDIN, true)
         var intentMainActivity = Intent(this, MainActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -53,7 +53,7 @@ class LoginActivity : BaseActivity(), LoginView {
     }
 
     override fun onLoginFailed(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
 

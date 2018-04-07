@@ -24,13 +24,16 @@
     <string name="nav_delete_stock">Delete Stock</string>
     <string name="nav_logout">Log Out</string>
 
-    <!--Add Stock Activity-->
-    <string name="stock_name">Stock Name</string>
+    <string name="menu_cart">Cart</string>
+
+    <!--Add Product Activity-->
+    <string name="product_name">Product Name</string>
     <string name="stock_date">Date of Purchase</string>
     <string name="stock_quantity">Quantity</string>
     <string name="stock_price">Stock Price</string>
     <string name="stock_sale_price">Sale Price</string>
     <string name="stock_add">Add New Stock</string>
+    <string name="product_add">Add New Product</string>
 
     <string name="tv_product_image">Add Product Image</string>
     <string name="cmenu_camera">Camera</string>
@@ -41,6 +44,14 @@
     <string name="btn_update">Update Product</string>
 
 
+    <!--All Product Fragment-->
+    <string name="fragment_all_product">All Product Fragment</string>
+    <string name="all_product">All Products</string>
+
+    <!--Recent Fragment-->
+    <string name="fragment_recent">Recent Fragment</string>
+    <string name="recent_products">Recent Products</string>
+
     <!--Delete Adapter-->
     <string name="btn_delete">Delete</string>
 
@@ -50,14 +61,16 @@
     <!--Product List Adapter-->
     <string name="pmenu_cart">Add to Cart</string>
     <string name="pmenu_edit">Edit Product</string>
+    <string name="pmenu_delete">Delete Product</string>
 
     <string name="try_again">Try again</string>
     <string name="btn_ok">Ok</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="sp_select">Select Category</string>
-    <string name="txt_rs">RS.\u0020</string>
-    <string name="txt_stock">Stock.\u0020</string>
+    <string name="txt_rs">RS.\u0020%1$d</string>
+    <string name="txt_space">\u0020</string>
+    <string name="txt_stock">Stock.\u0020%1$d</string>
     <string name="hint_search">Search</string>
     <string name="internal_storage">Internal storage</string>
     <string name="cancel">Cancel</string>
@@ -83,6 +96,7 @@
     <string name="error_image">Invalid Image</string>
     <string name="error_field">Invalid Field</string>
     <string name="error_date">Invalid Date</string>
+    <string name="error_item">Invalid quantity</string>
 
     <string name="error_network">Please check your internet connection</string>
     <string name="error_connection">No connection</string>
@@ -90,9 +104,6 @@
 
     <string name="download_completed">Download Completed. Check your app folder</string>
     <string name="download_failed">Download Failed. Please try again</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Success Messages-->
     <string name="add_product_success">Product Added Successfully</string>
@@ -102,6 +113,7 @@
     <string name="add_stock_success">Stock Added Successfully</string>
     <string name="delete_stock_success">Stock Deleted Successfully</string>
     <string name="update_stock_success">Stock Updated Successfully</string>
+    <string name="error_stock">Stock exceeded</string>
 
 
 </resources>

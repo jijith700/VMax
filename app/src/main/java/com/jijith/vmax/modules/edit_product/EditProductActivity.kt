@@ -22,7 +22,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.OnClick
@@ -31,9 +30,9 @@ import com.jijith.vmax.base.BaseActivity
 import com.jijith.vmax.models.Product
 import com.jijith.vmax.modules.add_product.AddProductActivity
 import com.jijith.vmax.utils.*
+import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import okhttp3.MultipartBody
-import org.parceler.Parcels
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -56,18 +55,18 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     @BindView(R.id.layout_product_image) lateinit var layoutProductImage: RelativeLayout
     @BindView(R.id.iv_product) lateinit var productImage: ImageView
     @BindView(R.id.til_product_name) lateinit var layoutStockName: TextInputLayout
-    @BindView(R.id.til_quantity) lateinit var layoutQuantity: TextInputLayout
-    @BindView(R.id.til_stock_price) lateinit var layoutStockPrice: TextInputLayout
-    @BindView(R.id.til_sale_price) lateinit var layoutSalePrice: TextInputLayout
+//    @BindView(R.id.til_quantity) lateinit var layoutQuantity: TextInputLayout
+//    @BindView(R.id.til_stock_price) lateinit var layoutStockPrice: TextInputLayout
+//    @BindView(R.id.til_sale_price) lateinit var layoutSalePrice: TextInputLayout
 
     @BindView(R.id.tiet_product_name) lateinit var productName: TextInputEditText
-    @BindView(R.id.tiet_quantity) lateinit var quantity: TextInputEditText
-    @BindView(R.id.tiet_stock_price) lateinit var stockPrice: TextInputEditText
-    @BindView(R.id.tiet_sale_price) lateinit var salePrice: TextInputEditText
+//    @BindView(R.id.tiet_quantity) lateinit var quantity: TextInputEditText
+//    @BindView(R.id.tiet_stock_price) lateinit var stockPrice: TextInputEditText
+//    @BindView(R.id.tiet_sale_price) lateinit var salePrice: TextInputEditText
 
-    @BindView(R.id.tv_date) lateinit var purchaseDate: TextView
+//    @BindView(R.id.tv_date) lateinit var purchaseDate: TextView
 
-    internal var bitmap: Bitmap? = null
+//    internal var bitmap: Bitmap? = null
 
     internal var fromDatePicker: DatePickerDialog? = null
     internal var fromDate: Long? = null
@@ -131,7 +130,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val extras = data?.extras
             try {
-                bitmap = extras!!.get("data") as Bitmap
+                var bitmap = extras!!.get("data") as Bitmap
 
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
                 val imageUri = getImageUri(applicationContext, bitmap!!)
@@ -162,7 +161,11 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
                 //                MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", new File(imageUri.getPath()).getName(), RequestBody.create(MediaType.parse("image/*"), fileBody));
                 val body = MultipartBody.Part.createFormData("file", filePath.getName(), fileBody)
 
-                productImage.setImageBitmap(bitmap)
+                Picasso
+                        .with(this)
+                        .load(File(fileName))
+                        .placeholder(R.drawable.ic_ph_product)
+                        .into(productImage)
 
             } catch (e: NullPointerException) {
                 //                if (mProgressDialog.isShowing())
@@ -180,7 +183,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
             val imageStream: InputStream
             try {
                 imageStream = contentResolver.openInputStream(imageUri)
-                bitmap = BitmapFactory.decodeStream(imageStream)
+                var bitmap = BitmapFactory.decodeStream(imageStream)
 
                 Log.e("FILE PATH", imageUri!!.path)
                 Log.e("FILE NAME", File(imageUri.path).name)
@@ -211,7 +214,11 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
                 //                MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", new File(imageUri.getPath()).getName(), RequestBody.create(MediaType.parse("image/*"), fileBody));
                 val body = MultipartBody.Part.createFormData("file", filePath.getName(), fileBody)
 
-                productImage.setImageBitmap(bitmap)
+                Picasso
+                        .with(this)
+                        .load(File(fileName))
+                        .placeholder(R.drawable.ic_ph_product)
+                        .into(productImage)
 
             } catch (e: FileNotFoundException) {
                 //                if (mProgressDialog.isShowing())
@@ -256,10 +263,10 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.title === getString(R.string.cmenu_camera)) {
             dispatchTakePictureIntent()
-            //            Toast.makeText(getApplicationContext(), "Camera code", Toast.LENGTH_LONG).show();
+            //            toast.makeText(getApplicationContext(), "Camera code", toast.LENGTH_LONG).show();
         } else if (item.title === getString(R.string.cmenu_gallery)) {
             onSelectGallery()
-            //            Toast.makeText(getApplicationContext(), "Gallery code", Toast.LENGTH_LONG).show();
+            //            toast.makeText(getApplicationContext(), "Gallery code", toast.LENGTH_LONG).show();
         } else {
             return false
         }
@@ -300,11 +307,11 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     }
 
     override fun onError(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorProductImage(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorStockName(msg: String) {
@@ -312,24 +319,24 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     }
 
     override fun onErrorPurchaseDate(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorQuantity(msg: String) {
-        quantity.error = msg
+//        quantity.error = msg
     }
 
     override fun onErrorStockPrice(msg: String) {
-        stockPrice.error = msg
+//        stockPrice.error = msg
     }
 
     override fun onErrorSalePrice(msg: String) {
-        salePrice.error = msg
+//        salePrice.error = msg
     }
 
     override fun onProductUpdated(msg: String) {
-        Utils.Toast(this, msg)
-        Utils.SavePreferences(this, Constants.PRODUCT_CHANGED, true)
+        Utils.toast(this, msg)
+        Utils.savePreferences(this, Constants.PRODUCT_CHANGED, true)
         finish()
     }
 
@@ -348,16 +355,17 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
 
     fun setValues() {
 
-        product = Parcels.unwrap(getIntent().getParcelableExtra(Constants.PRODUCT));
+        product = getIntent().getParcelableExtra(Constants.PRODUCT);
 
-//        val uri = Uri.fromFile(File(product.imagePath))
-//        Picasso.with(this)
-//                .load(uri)
-//                .into(productImage)
-//
-////        fileName = product.imagePath
-//        productName.setText(product.productName)
-//        purchaseDate.setText(product.purchaseDate)
+        val uri = Uri.fromFile(File(product.imagePath))
+        Picasso.with(this)
+                .load(uri)
+                .placeholder(R.drawable.ic_ph_product)
+                .into(productImage)
+
+        productName.setText(product.productName)
+        fileName = product.imagePath
+//        purchaseDate.setText(product)
 //        quantity.setText(product.quantity)
 //        stockPrice.setText(product.stockPrice)
 //        salePrice.setText(product.salePrice)
@@ -369,13 +377,13 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     @OnClick(R.id.layout_product_image)
     fun onClickProductImage() {
         openContextMenu(layoutProductImage)
-//        Utils.Toast(this, "clicked")
+//        Utils.toast(this, "clicked")
     }
 
-    @OnClick(R.id.tv_date)
-    fun onClickDate() {
-        fromDatePicker?.show()
-    }
+//    @OnClick(R.id.tv_date)
+//    fun onClickDate() {
+//        fromDatePicker?.show()
+//    }
 
     @OnClick(R.id.btn_update)
     fun onClickUpdateProduct() {
@@ -412,7 +420,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
             Log.e(AddProductActivity.TAG, e.toString())
         }
 
-        purchaseDate.setText(date)
+//        purchaseDate.setText(date)
     }
 
 }

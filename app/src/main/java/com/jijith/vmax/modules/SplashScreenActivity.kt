@@ -22,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler().postDelayed({
-            if (Utils.LoadPreferences(this, Constants.TOKEN).equals("1")) {
+            if (Utils.loadPreferences(this, Constants.TOKEN).equals("1")) {
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)

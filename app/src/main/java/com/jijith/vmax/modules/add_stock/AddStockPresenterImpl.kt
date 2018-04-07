@@ -1,7 +1,9 @@
 package com.jijith.vmax.modules.add_stock
 
+import android.content.Context
 import android.text.TextUtils
 import com.jijith.vmax.R
+import com.jijith.vmax.adapter.ProductListAdapter
 import com.jijith.vmax.api.ApiService
 import com.jijith.vmax.database.AppDatabase
 import com.jijith.vmax.models.Product
@@ -13,6 +15,7 @@ import io.reactivex.Completable
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.io.FileInputStream
@@ -44,6 +47,18 @@ class AddStockPresenterImpl @Inject constructor(private var context: AddStockAct
 
     }
 
+    override fun getProducts() {
+
+        appDatabase.productModel().getAllProductItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Consumer<List<Product>> {
+                    override fun accept(products: List<Product>) {
+                        addStockView.onGetProducts(products)
+                    }
+                })
+    }
+
     override fun addStock(product: Product, stock: Stock) {
         if (isValid(product.productName, stock.purchaseDate, product.quantity,
                         stock.stockPrice, stock.salePrice, product.imagePath)) {
@@ -64,7 +79,6 @@ class AddStockPresenterImpl @Inject constructor(private var context: AddStockAct
                 stock.id = nextStockId
 
                 Completable.fromAction {
-                    appDatabase.productModel().addProduct(product)
                     appDatabase.stockModel().addStock(stock)
                 }.observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())

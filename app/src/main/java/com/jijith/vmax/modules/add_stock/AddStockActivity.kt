@@ -28,7 +28,6 @@ import com.jijith.vmax.base.BaseActivity
 import com.jijith.vmax.models.Product
 import com.jijith.vmax.models.Stock
 import com.jijith.vmax.utils.*
-import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
 import okhttp3.MultipartBody
 import java.io.ByteArrayOutputStream
@@ -50,14 +49,14 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
     internal val REQUEST_IMAGE_CAPTURE = 84
     internal val REQUEST_PERMISSION = 100
 
-    @BindView(R.id.layout_product_image) lateinit var layoutProductImage: RelativeLayout
-    @BindView(R.id.iv_product) lateinit var productImage: ImageView
-    @BindView(R.id.til_product_name) lateinit var layoutStockName: TextInputLayout
+//    @BindView(R.id.layout_product_image) lateinit var layoutProductImage: RelativeLayout
+//    @BindView(R.id.iv_product) lateinit var productImage: ImageView
+//    @BindView(R.id.til_product_name) lateinit var layoutStockName: TextInputLayout
     @BindView(R.id.til_quantity) lateinit var layoutQuantity: TextInputLayout
     @BindView(R.id.til_stock_price) lateinit var layoutStockPrice: TextInputLayout
     @BindView(R.id.til_sale_price) lateinit var layoutSalePrice: TextInputLayout
 
-    @BindView(R.id.tiet_product_name) lateinit var productName: TextInputEditText
+    @BindView(R.id.sp_product) lateinit var productName: Spinner
     @BindView(R.id.tiet_quantity) lateinit var quantity: TextInputEditText
     @BindView(R.id.tiet_stock_price) lateinit var stockPrice: TextInputEditText
     @BindView(R.id.tiet_sale_price) lateinit var salePrice: TextInputEditText
@@ -72,6 +71,7 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 
     @Inject lateinit var addStockPresenter: AddStockPresenter
 
+    lateinit var products : List<Product>
 
     var fileName : String = ""
 
@@ -101,14 +101,18 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
             Log.e(TAG, e.toString())
         }
 
-        Picasso.with(this)
-                .load(Uri.parse(fileName))
-                .placeholder(R.drawable.ic_ph_product)
-                .into(productImage)
+//        Picasso.with(this)
+//                .load(Uri.parse(fileName))
+//                .placeholder(R.drawable.ic_ph_product)
+//                .into(productImage)
 
         addStockPresenter.getId()
+        addStockPresenter.getProducts()
 
-        registerForContextMenu(layoutProductImage)
+//        registerForContextMenu(layoutProductImage)
+
+        productName.requestFocus()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -166,11 +170,11 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 //                productImage.setImageBitmap(bitmap)
 
 
-                Picasso
-                        .with(this)
-                        .load(File(fileName))
-                        .placeholder(R.drawable.ic_ph_product)
-                        .into(productImage)
+//                Picasso
+//                        .with(this)
+//                        .load(File(fileName))
+//                        .placeholder(R.drawable.ic_ph_product)
+//                        .into(productImage)
 
             } catch (e: NullPointerException) {
                 //                if (mProgressDialog.isShowing())
@@ -222,11 +226,11 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 //                productImage.setImageBitmap(bitmap)
 
 
-                Picasso
-                        .with(this)
-                        .load(File(fileName))
-                        .placeholder(R.drawable.ic_ph_product)
-                        .into(productImage)
+//                Picasso
+//                        .with(this)
+//                        .load(File(fileName))
+//                        .placeholder(R.drawable.ic_ph_product)
+//                        .into(productImage)
 
             } catch (e: FileNotFoundException) {
                 //                if (mProgressDialog.isShowing())
@@ -271,10 +275,10 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.title === getString(R.string.cmenu_camera)) {
             dispatchTakePictureIntent()
-            //            Toast.makeText(getApplicationContext(), "Camera code", Toast.LENGTH_LONG).show();
+            //            toast.makeText(getApplicationContext(), "Camera code", toast.LENGTH_LONG).show();
         } else if (item.title === getString(R.string.cmenu_gallery)) {
             onSelectGallery()
-            //            Toast.makeText(getApplicationContext(), "Gallery code", Toast.LENGTH_LONG).show();
+            //            toast.makeText(getApplicationContext(), "Gallery code", toast.LENGTH_LONG).show();
         } else {
             return false
         }
@@ -315,35 +319,35 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
     }
 
     override fun onStockAdded(msg: String) {
-        Utils.showSnackBar(productImage, msg)
-
-        productImage.setImageDrawable(null)
-        productName.setText("")
+//        Utils.showSnackBar(productImage, msg)
+//
+//        productImage.setImageDrawable(null)
+//        productName.setText("")
         purchaseDate.text = ""
         quantity.setText("")
         stockPrice.setText("")
         salePrice.setText("")
 
-        productName.requestFocus()
+//        productName.requestFocus()
 
-        Utils.SavePreferences(this, Constants.PRODUCT_CHANGED, true)
+        Utils.savePreferences(this, Constants.PRODUCT_CHANGED, true)
 
     }
 
     override fun onError(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorProductImage(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorStockName(msg: String) {
-        productName.error = msg
+//        productName.error = msg
     }
 
     override fun onErrorPurchaseDate(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorQuantity(msg: String) {
@@ -370,10 +374,10 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @OnClick(R.id.layout_product_image)
-    fun onClickProductImage() {
-        openContextMenu(layoutProductImage)
-//        Utils.Toast(this, "clicked")
+    override fun onGetProducts(products: List<Product>) {
+        this.products = products
+        var adapter = ArrayAdapter<Product>(this, android.R.layout.simple_spinner_item, products);
+        productName.adapter = adapter;
     }
 
     @OnClick(R.id.tv_date)
@@ -394,15 +398,14 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
     @OnClick(R.id.btn_add)
     fun onClickAddProduct() {
 
-        var product = Product()
+        var product = products.get(productName.selectedItemPosition)
         var stock = Stock()
-        product.productName = productName.text.toString()
+//        product.productName = productName.text.toString()
         stock.purchaseDate = purchaseDate.text.toString()
         product.quantity = Integer.parseInt(quantity.text.toString())
         stock.stockPrice = Integer.parseInt(stockPrice.text.toString())
         stock.salePrice = Integer.parseInt(salePrice.text.toString())
         stock.balanceStock = Integer.parseInt(quantity.text.toString())
-        product.imagePath = fileName
 
         addStockPresenter.addStock( product, stock)
     }

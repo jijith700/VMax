@@ -35,8 +35,8 @@ class EditProductPresenterImpl @Inject constructor(private var context: EditProd
 
     override fun editProduct(product: Product, fileName: String) {
 
-        if (!TextUtils.isEmpty(fileName) && !fileName.equals(product.imagePath)) {
-            if (Utils.hasAppFolder(context)) {
+        if (isValid(product.productName, fileName)) {
+            if (Utils.hasAppFolder(context) && !fileName.equals(product.imagePath)) {
                 val path = File(Utils.getFolderPath(context, context.getString(R.string.dir_product)).toString() + File.separator + product.productName + ".jpg")
 
 //                deleteFile(File(product.imagePath))
@@ -44,23 +44,22 @@ class EditProductPresenterImpl @Inject constructor(private var context: EditProd
 
                 product.imagePath = path.toString()
             }
+
+            Completable.fromAction {
+                appDatabase.productModel().addProduct(product)
+            }.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
+                        override fun onSubscribe(d: Disposable) {}
+
+                        override fun onComplete() {
+                            editProductView.onProductUpdated(context.getString(R.string.update_product_success))
+                        }
+
+                        override fun onError(e: Throwable) {
+                            AppLog.e(TAG, e.toString())
+                        }
+                    })
         }
-
-        Completable.fromAction {
-            appDatabase.productModel().addProduct(product)
-        }.observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io()).subscribe(object : CompletableObserver {
-                    override fun onSubscribe(d: Disposable) {}
-
-                    override fun onComplete() {
-                        editProductView.onProductUpdated(context.getString(R.string.update_product_success))
-                    }
-
-                    override fun onError(e: Throwable) {
-                        AppLog.e(TAG, e.toString())
-                    }
-                })
-
     }
 
     override fun getProducts(context: Context) {
@@ -68,6 +67,22 @@ class EditProductPresenterImpl @Inject constructor(private var context: EditProd
 
 //        AppLog.e("Size", "" + deleteProductAdapter.itemCount)
 
+    }
+
+    private fun isValid(productName: String, imagePath: String): Boolean {
+        var isValid = true
+
+        if (TextUtils.isEmpty(imagePath)) {
+            editProductView.onErrorProductImage(context.getString(R.string.error_image))
+            isValid = false
+        }
+
+        if (TextUtils.isEmpty(productName)) {
+            editProductView.onErrorStockName(context.getString(R.string.error_field))
+            isValid = false
+        }
+
+        return isValid
     }
 
     /**

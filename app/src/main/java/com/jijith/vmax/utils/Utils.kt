@@ -1,6 +1,7 @@
 package com.jijith.vmax.utils
 
 import android.content.Context
+import android.graphics.drawable.LayerDrawable
 import android.net.ConnectivityManager
 import android.os.Environment
 import android.preference.PreferenceManager
@@ -15,15 +16,13 @@ import java.io.IOException
 /**
  * Created by jijith on 12/26/17.
  */
-class Utils(context: Context) {
-
-    private val mContext: Context = context
+class Utils {
 
     companion object {
 
         val TAG = Utils::class.java.simpleName
 
-        fun SavePreferences(context: Context, key: String, value: String) {
+        fun savePreferences(context: Context, key: String, value: String) {
             val sp = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = sp.edit()
             editor.putString(key, value)
@@ -32,7 +31,7 @@ class Utils(context: Context) {
 
         }
 
-        fun SavePreferences(context: Context, key: String, value: Boolean) {
+        fun savePreferences(context: Context, key: String, value: Boolean) {
             val sp = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = sp.edit()
             editor.putBoolean(key, value)
@@ -41,14 +40,14 @@ class Utils(context: Context) {
 
         }
 
-        fun LoadPreferences(context: Context, key: String): String {
+        fun loadPreferences(context: Context, key: String): String {
             val sp = PreferenceManager.getDefaultSharedPreferences(context)
             var value = ""
             value = sp.getString(key, "")
             return value
         }
 
-        fun LoadPreferencesBoolean(context: Context, key: String): Boolean {
+        fun loadPreferencesBoolean(context: Context, key: String): Boolean {
             val sp = PreferenceManager.getDefaultSharedPreferences(context)
             var value = false
             value = sp.getBoolean(key, false)
@@ -100,7 +99,7 @@ class Utils(context: Context) {
             dialog.show()
         }
 
-        fun Toast(context: Context, msg: String) {
+        fun toast(context: Context, msg: String) {
             android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
         }
 
@@ -125,20 +124,20 @@ class Utils(context: Context) {
 
                 if (!File(filePath).exists()) {
                     if (File(filePath).mkdir()) {
-                        AppLog.d(getTag(Utils::class.java), "Directory created")
+                        AppLog.d(TAG, "Directory created")
 
                         File(filePath + File.separator +
                                 context.getString(R.string.dir_product)).mkdir()
-                        AppLog.d(getTag(Utils::class.java), "Product Directory created")
+                        AppLog.d(TAG, "Product Directory created")
 
                         File(filePath +
                                 File.separator + context.getString(R.string.dir_product) +
                                 File.separator + context.getString(R.string.file_no_media)).createNewFile()
-                        AppLog.d(getTag(Utils::class.java), "No Media created")
+                        AppLog.d(TAG, "No Media created")
 
                         return true
                     } else {
-                        AppLog.d(getTag(Utils::class.java), "Directory is not created")
+                        AppLog.d(TAG, "Directory is not created")
                         return false
                     }
                 } else
@@ -157,20 +156,20 @@ class Utils(context: Context) {
 
                 if (!File(filePath).exists()) {
                     if (File(filePath).mkdir()) {
-                        AppLog.d(getTag(Utils::class.java), "Directory created")
+                        AppLog.d(TAG, "Directory created")
 
                         file = File(filePath + File.separator + dir)
                         file.mkdir()
-                        AppLog.d(getTag(Utils::class.java), "Product Directory created")
+                        AppLog.d(TAG, "Product Directory created")
 
                         File(filePath +
                                 File.separator + context.getString(R.string.dir_product) +
                                 File.separator + context.getString(R.string.file_no_media)).createNewFile()
-                        AppLog.d(getTag(Utils::class.java), "No Media created")
+                        AppLog.d(TAG, "No Media created")
 
                         return file
                     } else {
-                        AppLog.d(getTag(Utils::class.java), "Directory is not created")
+                        AppLog.d(TAG, "Directory is not created")
                         file = File(filePath + File.separator + dir)
                         return file
                     }
@@ -183,8 +182,23 @@ class Utils(context: Context) {
             }
         }
 
-        fun getTag(className: Class<*>) : String {
-            return className::class.java.simpleName
+        fun setBadgeCount(context : Context, icon: LayerDrawable, count: String ) {
+
+            val badge : BadgeDrawable
+
+            // Reuse drawable if possible
+            val reuse = icon.findDrawableByLayerId(R.id.ic_badge)
+            if (reuse != null && reuse is BadgeDrawable) {
+                badge = reuse
+            } else {
+                badge = BadgeDrawable(context)
+                icon.mutate();
+                icon.setDrawableByLayerId(R.id.ic_badge, badge);
+            }
+
+            badge.setCount(count);
+//            icon.mutate();
+//            icon.setDrawableByLayerId(R.id.ic_badge, badge);
         }
     }
 }

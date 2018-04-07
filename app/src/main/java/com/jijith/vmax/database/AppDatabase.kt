@@ -11,7 +11,7 @@ import com.jijith.vmax.models.Stock
 /**
  * Created by jijith on 4/3/18.
  */
-@Database(entities = arrayOf(Product::class, Stock::class), version = 1)
+@Database(entities = arrayOf(Product::class, Stock::class), version = 1, exportSchema = false)
 public abstract class AppDatabase : RoomDatabase() {
 
     companion object {

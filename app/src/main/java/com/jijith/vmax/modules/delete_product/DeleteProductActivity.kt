@@ -70,9 +70,9 @@ class DeleteProductActivity : BaseActivity(), DeleteProductView {
 
     override fun onProductDeleted(msg: String) {
         Utils.showSnackBar(productList, msg)
-        deleteProductPresenter.updateAdapter(this)
+//        deleteProductPresenter.updateAdapter(this)
 
-        Utils.SavePreferences(this, Constants.PRODUCT_CHANGED, true)
+//        Utils.SavePreferences(this, Constants.PRODUCT_CHANGED, true)
     }
 
     override fun onError(msg: String) {

@@ -44,11 +44,14 @@
             android:text=""
             android:textColor="@android:color/black" />
 
-        <Button
+        <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:layout_alignParentEnd="true"
+            card_view:srcCompat="@drawable/ic_delete"
+            android:background="@drawable/bg_round"
             android:layout_below="@+id/tv_price"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="7dp"

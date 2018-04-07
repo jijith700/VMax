@@ -10,8 +10,11 @@ import com.jijith.vmax.modules.delete_product.DeleteProductActivity
 import com.jijith.vmax.modules.delete_product.DeleteProductActivityModule
 import com.jijith.vmax.modules.edit_product.EditProductActivity
 import com.jijith.vmax.modules.edit_product.EditProductActivityModule
+import com.jijith.vmax.modules.home.HomeFragmentProvider
 import com.jijith.vmax.modules.home.MainActivity
 import com.jijith.vmax.modules.home.MainActivityModule
+import com.jijith.vmax.modules.home.all_products.AllProductFragment
+import com.jijith.vmax.modules.home.all_products.AllProductModule
 import com.jijith.vmax.modules.home.recent.RecentFragment
 import com.jijith.vmax.modules.home.recent.RecentModule
 import com.jijith.vmax.modules.login.LoginActivity
@@ -25,7 +28,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class,
+            HomeFragmentProvider::class))
     internal abstract fun bindMainActivity(): MainActivity
 
     @ContributesAndroidInjector(modules = arrayOf(LoginActivityModule::class))
@@ -51,7 +55,10 @@ abstract class ActivityBuilder {
     /*
     * Fragments binding
     * */
-    @ContributesAndroidInjector(modules = arrayOf(RecentModule::class))
-    internal abstract fun bindRecentFragment(): RecentFragment
+//    @ContributesAndroidInjector(modules = arrayOf(AllProductModule::class))
+//    abstract fun bindAllProductFragment(): AllProductFragment
+//
+//    @ContributesAndroidInjector(modules = arrayOf(RecentModule::class))
+//    abstract fun bindRecentFragment(): RecentFragment
 
 }

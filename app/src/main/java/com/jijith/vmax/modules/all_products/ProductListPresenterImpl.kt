@@ -5,6 +5,7 @@ import com.jijith.vmax.adapter.ProductListAdapter
 import com.jijith.vmax.api.ApiService
 import com.jijith.vmax.database.AppDatabase
 import com.jijith.vmax.models.Product
+import com.jijith.vmax.models.ProductWithStock
 import com.jijith.vmax.utils.AppLog
 import io.reactivex.FlowableSubscriber
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,11 +30,11 @@ class ProductListPresenterImpl @Inject constructor(private var context: ProductL
     override fun getProducts(context: Context) {
         productListAdapter = ProductListAdapter(context)
 
-        appDatabase.productModel().getAllProductItems()
+        appDatabase.productModel().getProductWithStock()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Consumer<List<Product>> {
-                    override fun accept(t: List<Product>) {
+                .subscribe(object : Consumer<List<ProductWithStock>> {
+                    override fun accept(t: List<ProductWithStock>) {
                         productListAdapter.updateAdapter(t)
                     }
                 })

@@ -56,9 +56,9 @@ class RecentFragment : BaseFragment() , RecentView {
     override fun onResume() {
         super.onResume()
 
-        if (Utils.LoadPreferencesBoolean(activity!!.applicationContext, Constants.PRODUCT_CHANGED)) {
+        if (Utils.loadPreferencesBoolean(activity!!.applicationContext, Constants.PRODUCT_CHANGED)) {
             recentPresenter.updateRecentProduct(activity!!.applicationContext)
-            Utils.SavePreferences(activity!!.applicationContext, Constants.PRODUCT_CHANGED, false)
+            Utils.savePreferences(activity!!.applicationContext, Constants.PRODUCT_CHANGED, false)
         }
     }
 }

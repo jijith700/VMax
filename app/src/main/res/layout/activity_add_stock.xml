@@ -23,45 +23,52 @@
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/layout_product_image"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_product_image"
-                android:clickable="true"
-                android:gravity="center">
+            <!--<RelativeLayout-->
+            <!--android:id="@+id/layout_product_image"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="250dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/bg_product_image"-->
+            <!--android:clickable="true"-->
+            <!--android:gravity="center">-->
 
-                <ImageView
-                    android:id="@+id/iv_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:clickable="false"
-                    android:padding="2dp">
+            <!--<ImageView-->
+            <!--android:id="@+id/iv_product"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:clickable="false"-->
+            <!--android:padding="2dp">-->
 
-                    <requestFocus />
+            <!--<requestFocus />-->
 
-                </ImageView>
+            <!--</ImageView>-->
 
-            </RelativeLayout>
+            <!--</RelativeLayout>-->
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/til_product_name"
+            <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:id="@+id/til_product_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="15dp">-->
+
+            <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:id="@+id/tiet_product_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="@string/product_name"-->
+            <!--android:inputType="textPersonName|textCapSentences"-->
+            <!--android:lines="1" />-->
+
+            <!--</android.support.design.widget.TextInputLayout>-->
+
+
+            <Spinner
+                android:id="@+id/sp_product"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="15dp">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/tiet_product_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/stock_name"
-                    android:inputType="textPersonName|textCapSentences"
-                    android:lines="1" />
-
-            </android.support.design.widget.TextInputLayout>
+                android:layout_height="40dp"
+                android:background="@drawable/ic_spinner" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -144,14 +151,14 @@
 
 
             <!--<Button-->
-                <!--android:id="@+id/btn_show"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginBottom="40dp"-->
-                <!--android:layout_marginTop="20dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="show" />-->
+            <!--android:id="@+id/btn_show"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginBottom="40dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="show" />-->
 
         </LinearLayout>
     </ScrollView>

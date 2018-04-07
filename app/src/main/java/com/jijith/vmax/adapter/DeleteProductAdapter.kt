@@ -2,6 +2,7 @@ package com.jijith.vmax.adapter
 
 import android.content.Context
 import android.net.Uri
+import android.support.v7.widget.AppCompatImageButton
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -74,7 +75,7 @@ class DeleteProductAdapter : RecyclerView.Adapter<DeleteProductAdapter.ViewHolde
         @BindView(R.id.tv_price)
         lateinit var tvPrice: TextView
         @BindView(R.id.btn_delete)
-        lateinit var btnDelete: Button
+        lateinit var btnDelete: AppCompatImageButton
 
         init {
             ButterKnife.bind(this, itemView)

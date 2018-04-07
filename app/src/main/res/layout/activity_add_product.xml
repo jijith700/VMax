@@ -57,7 +57,7 @@
                     android:id="@+id/tiet_product_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/stock_name"
+                    android:hint="@string/product_name"
                     android:inputType="textPersonName|textCapSentences"
                     android:lines="1" />
 
@@ -77,7 +77,6 @@
                     android:paddingEnd="5dp"
                     android:paddingStart="5dp"
                     android:text="@string/stock_date"
-                    android:textColor="@color/colorBlack"
                     android:textSize="17sp" />
 
                 <View
@@ -137,12 +136,13 @@
             <Button
                 android:id="@+id/btn_add"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:text="@string/stock_add" />
+                android:background="@drawable/bg_btn_green"
+                android:text="@string/product_add" />
 
 
             <!--<Button-->

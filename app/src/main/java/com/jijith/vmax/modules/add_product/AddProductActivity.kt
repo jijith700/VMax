@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.ContextMenu
 import android.view.Menu
@@ -89,18 +90,16 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
 
     var fileName: String = ""
 
-
     override fun getLayout(): Int {
         return R.layout.activity_add_product
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_add_stock)
         AndroidInjection.inject(this);
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Open the realm for the UI thread.
 //        realm = Realm.getDefaultInstance()
@@ -152,7 +151,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
                 val bitmap = extras!!.get("data") as Bitmap
 
                 // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
-                val imageUri = getImageUri(applicationContext, bitmap!!)
+                val imageUri = getImageUri(applicationContext, bitmap)
 
                 // CALL THIS METHOD TO GET THE ACTUAL PATH
                 //                File finalFile = new File(getRealPathFromURI(imageUri));
@@ -286,10 +285,10 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.title === getString(R.string.cmenu_camera)) {
             dispatchTakePictureIntent()
-            //            Toast.makeText(getApplicationContext(), "Camera code", Toast.LENGTH_LONG).show();
+            //            toast.makeText(getApplicationContext(), "Camera code", toast.LENGTH_LONG).show();
         } else if (item.title === getString(R.string.cmenu_gallery)) {
             onSelectGallery()
-            //            Toast.makeText(getApplicationContext(), "Gallery code", Toast.LENGTH_LONG).show();
+            //            toast.makeText(getApplicationContext(), "Gallery code", toast.LENGTH_LONG).show();
         } else {
             return false
         }
@@ -341,16 +340,16 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
 
         productName.requestFocus()
 
-        Utils.SavePreferences(this, Constants.PRODUCT_CHANGED, true)
+        Utils.savePreferences(this, Constants.PRODUCT_CHANGED, true)
 
     }
 
     override fun onError(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorProductImage(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorStockName(msg: String) {
@@ -358,7 +357,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
     }
 
     override fun onErrorPurchaseDate(msg: String) {
-        Utils.Toast(this, msg)
+        Utils.toast(this, msg)
     }
 
     override fun onErrorQuantity(msg: String) {
@@ -388,7 +387,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
     @OnClick(R.id.layout_product_image)
     fun onClickProductImage() {
         openContextMenu(layoutProductImage)
-//        Utils.Toast(this, "clicked")
+//        Utils.toast(this, "clicked")
     }
 
     @OnClick(R.id.tv_date)
@@ -446,6 +445,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         }
 
         purchaseDate.setText(date)
+        purchaseDate.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
     }
 
 }

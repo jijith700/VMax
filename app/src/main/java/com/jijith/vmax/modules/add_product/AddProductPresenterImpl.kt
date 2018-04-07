@@ -59,8 +59,7 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
                 product.imagePath = path.toString()
 
                 stock.quantity = product.quantity
-//                stock.stockPrice = product.stockPrice
-//                stock.salePrice = product.salePrice
+                stock.balanceStock = product.quantity
                 stock.discount = 0
 
                 val nextProductId = if (maxProductId == null) 1 else maxProductId + 1
@@ -87,8 +86,6 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
                                 AppLog.e(TAG, e.toString())
                             }
                         })
-
-
             }
         }
     }
