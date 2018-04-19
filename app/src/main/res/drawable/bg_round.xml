@@ -3,28 +3,28 @@
 
     <item android:state_selected="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/colorPrimary" />
+            <solid android:color="@color/colorPrimaryDark" />
             <corners android:radius="300dp" />
         </shape>
     </item>
 
     <item android:state_hovered="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/colorPrimary" />
+            <solid android:color="@color/colorPrimaryDark" />
             <corners android:radius="300dp" />
         </shape>
     </item>
 
     <item android:state_pressed="true">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="@color/colorPrimary" />
+            <solid android:color="@color/colorPrimaryDark" />
             <corners android:radius="300dp" />
         </shape>
     </item>
 
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <solid android:color="#DFDFDF" />
+            <solid android:color="@color/colorPrimary" />
             <corners android:radius="300dp" />
         </shape>
     </item>

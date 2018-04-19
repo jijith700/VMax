@@ -39,7 +39,7 @@ class EditProductPresenterImpl @Inject constructor(private var context: EditProd
             if (Utils.hasAppFolder(context) && !fileName.equals(product.imagePath)) {
                 val path = File(Utils.getFolderPath(context, context.getString(R.string.dir_product)).toString() + File.separator + product.productName + ".jpg")
 
-//                deleteFile(File(product.imagePath))
+//                deleteFile(File(productWithStock.imagePath))
                 copyFile(File(fileName), path)
 
                 product.imagePath = path.toString()

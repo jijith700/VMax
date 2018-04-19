@@ -13,17 +13,17 @@ import io.reactivex.Single
 @Dao
 public interface ProductDao {
 
-    @Query("select max(id) from product")
+    @Query("select max(id) from productWithStock")
     fun getItemId() : Single<Int>
 
-    @Query("select * from product")
+    @Query("select * from productWithStock")
     fun getAllProductItems(): Flowable<List<Product>>
 
-    @Query("select * from product where id = :id")
+    @Query("select * from productWithStock where id = :id")
     fun getItembyId(id: String): Product
 
     @Transaction
-    @Query("select * from product")
+    @Query("select * from productWithStock")
     fun getProductWithStock(): Flowable<List<ProductWithStock>>
 
     @Insert(onConflict = REPLACE)

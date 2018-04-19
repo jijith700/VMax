@@ -18,6 +18,7 @@ import com.jijith.vmax.R
 import com.jijith.vmax.models.ProductWithStock
 import com.jijith.vmax.modules.edit_product.EditProductActivity
 import com.jijith.vmax.modules.home.MainView
+import com.jijith.vmax.modules.productdetail.ProductDetailActivity
 import com.jijith.vmax.utils.AppLog
 import com.jijith.vmax.utils.Constants
 import com.squareup.picasso.MemoryPolicy
@@ -30,7 +31,7 @@ import java.io.File
  */
 class ProductListAdapter(var context: Context?) : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
 
-    private var products: List<ProductWithStock>
+    public var products: ArrayList<ProductWithStock>
     private var mainView : MainView? = null
 
     constructor(context: Context?, mainView: MainView) : this(context) {
@@ -48,7 +49,7 @@ class ProductListAdapter(var context: Context?) : RecyclerView.Adapter<ProductLi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val uri = Uri.fromFile(File(products[position].product?.imagePath))
+        val uri = Uri.fromFile(File(products[holder.adapterPosition].product?.imagePath))
         Picasso.with(context).invalidate(uri)
         Picasso.with(context)
                 .load(uri)
@@ -56,28 +57,28 @@ class ProductListAdapter(var context: Context?) : RecyclerView.Adapter<ProductLi
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .into(holder.ivProduct)
 
-        holder.tvProductName.text = products[position].product?.productName
+        holder.tvProductName.text = products[holder.adapterPosition].product?.productName
 
         holder.tvStock.text = String.format(context!!.getString(R.string.txt_stock),
-                products[position].stock!![0].balanceStock)
+                products[holder.adapterPosition].stock!![0].balanceStock)
 
         holder.tvPrice.text = String.format(context!!.getString(R.string.txt_rs),
-                products[position].stock!![0].salePrice)
+                products[holder.adapterPosition].stock!![products[holder.adapterPosition].stock!!.size - 1].salePrice)
 
-        if (products[position].stock!!.size > 1) {
+        if (products[holder.adapterPosition].stock!!.size > 1) {
 
             var stock = 0
-            for (i in 0 until products[position].stock!!.size - 1){
-                stock += products[position].stock!![i].balanceStock
+            for (i in 0 until products[holder.adapterPosition].stock!!.size - 1) {
+                stock += products[holder.adapterPosition].stock!![i].balanceStock
             }
 
             if (stock > 100) holder.nbQantity.setRange(1, 100)
             else holder.nbQantity.setRange(1, stock)
 
         } else {
-            if (products[position].stock!![0].balanceStock == 0)
+            if (products[holder.adapterPosition].stock!![0].balanceStock == 0)
                 holder.nbQantity.setRange(0, 0)
-            else holder.nbQantity.setRange(1, products[position].stock!![0].balanceStock)
+            else holder.nbQantity.setRange(1, products[holder.adapterPosition].stock!![0].balanceStock)
         }
 
 
@@ -85,42 +86,39 @@ class ProductListAdapter(var context: Context?) : RecyclerView.Adapter<ProductLi
 
             if (holder.nbQantity.getIntNumber() == 0) {
                 Toast.makeText(context, context!!.getString(R.string.error_item), Toast.LENGTH_SHORT).show()
-            } else if (products[position].stock!!.size > 1) {
+            } else if (products[holder.adapterPosition].stock!!.size > 1) {
 
                 var stock = 0
-                for (i in 0 until products[position].stock!!.size - 1){
-                    stock += products[position].stock!![i].balanceStock
+                for (i in 0 until products[holder.adapterPosition].stock!!.size - 1) {
+                    stock += products[holder.adapterPosition].stock!![i].balanceStock
                 }
 
-                if (products[position].count + holder.nbQantity.getIntNumber() > stock)
+                if (products[holder.adapterPosition].count + holder.nbQantity.getIntNumber() > stock)
                     Toast.makeText(context, context!!.getString(R.string.error_stock), Toast.LENGTH_SHORT).show()
                 else {
                     AppLog.d("NB", holder.nbQantity.getStringNumber())
-                    products[position].count += holder.nbQantity.getIntNumber()
+                    products[holder.adapterPosition].count += holder.nbQantity.getIntNumber()
 
-                    mainView!!.onAddedToCart(products[position])
+                    mainView!!.onAddedToCart(products[holder.adapterPosition])
                 }
 
             } else {
-                val stock = products[position].stock!![0].balanceStock
+                val stock = products[holder.adapterPosition].stock!![0].balanceStock
 
                 if (stock == 0)
                     Toast.makeText(context, context!!.getString(R.string.error_item), Toast.LENGTH_SHORT).show()
                 else {
 
-                    if (products[position].count + holder.nbQantity.getIntNumber() > stock)
+                    if (products[holder.adapterPosition].count + holder.nbQantity.getIntNumber() > stock)
                         Toast.makeText(context, context!!.getString(R.string.error_stock), Toast.LENGTH_SHORT).show()
                     else {
                         AppLog.d("NB", holder.nbQantity.getStringNumber())
-                        products[position].count += holder.nbQantity.getIntNumber()
+                        products[holder.adapterPosition].count += holder.nbQantity.getIntNumber()
 
-                        mainView!!.onAddedToCart(products[position])
+                        mainView!!.onAddedToCart(products[holder.adapterPosition])
                     }
                 }
             }
-
-
-
         })
 
         holder.btnMore.setOnClickListener({
@@ -137,13 +135,20 @@ class ProductListAdapter(var context: Context?) : RecyclerView.Adapter<ProductLi
                     if (item.itemId == R.id.menu_edit) {
                     val intentEdit = Intent(context, EditProductActivity::class.java)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .putExtra(Constants.PRODUCT, products[position].product)
+                            .putExtra(Constants.PRODUCT, products[holder.adapterPosition].product)
                     context?.startActivity(intentEdit)
                 }
                 true
             }
 
             popup.show()//showing popup menu
+        })
+
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val intentProductDetail = Intent(context, ProductDetailActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(Constants.PRODUCT_WITH_STOCK, products[holder.adapterPosition])
+            context?.startActivity(intentProductDetail)
         })
     }
 
@@ -169,10 +174,14 @@ class ProductListAdapter(var context: Context?) : RecyclerView.Adapter<ProductLi
         init {
             ButterKnife.bind(this, itemView)
         }
-
     }
 
     fun updateAdapter(products: List<ProductWithStock>) {
+        this.products = products as ArrayList<ProductWithStock>
+        notifyDataSetChanged()
+    }
+
+    fun updateAdapter(products: ArrayList<ProductWithStock>) {
         this.products = products
         notifyDataSetChanged()
     }

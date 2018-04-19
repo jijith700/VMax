@@ -1,12 +1,10 @@
 package com.jijith.vmax.database
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
+import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
-import android.arch.persistence.room.Query
 import com.jijith.vmax.models.Stock
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 /**
@@ -19,10 +17,19 @@ public interface StockDao {
     fun getItemId(): Single<Int>
 
     @Query("select * from stock")
-    fun getAllStockItems(): LiveData<List<Stock>>
+    fun getAllStockItems(): Flowable<List<Stock>>
 
     @Query("select * from stock where id = :id")
     fun getItembyId(id: String): Stock
+
+    @Query("update stock set balanceStock  = :balanceStock where id = :id")
+    fun update(balanceStock: Int, id: Int)
+
+    @Query("update stock set balanceStock  = :balanceStock, isClosed = :isClosed where id = :id")
+    fun update(balanceStock: Int, isClosed: Boolean, id: Int)
+
+    @Update
+    fun update(stock: Stock)
 
     @Insert(onConflict = REPLACE)
     fun addStock(stock: Stock)

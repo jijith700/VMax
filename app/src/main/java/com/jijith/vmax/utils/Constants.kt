@@ -31,8 +31,11 @@ class Constants {
 
         val PRODUCT_CHANGED : String = "productChanged"
 
-        val PRODUCT = "product"
+        val PRODUCT = "productWithStock"
         val PRODUCT_LIST = "productList"
+        val PRODUCT_WITH_STOCK = "productWithStock"
+
+        val CHECK_OUT = "checkOut"
 
     }
 

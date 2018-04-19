@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#8f5b8f</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorTabTextNormal">#f4f4f4</color>
     <!--<color name="colorCommonGreay">#DFDFDF</color>-->
     <color name="colorCommonGreay">#dcdcdc</color>
 

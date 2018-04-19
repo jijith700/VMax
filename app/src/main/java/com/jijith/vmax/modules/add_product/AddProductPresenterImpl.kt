@@ -49,7 +49,7 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
 
     }
 
-    override fun addStock(product: Product, stock: Stock) {
+    override fun addProduct(product: Product, stock: Stock) {
         if (isValid(product.productName, stock.purchaseDate, product.quantity,
                         stock.stockPrice, stock.salePrice, product.imagePath)) {
             if (Utils.hasAppFolder(context)) {
@@ -58,8 +58,6 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
 
                 product.imagePath = path.toString()
 
-                stock.quantity = product.quantity
-                stock.balanceStock = product.quantity
                 stock.discount = 0
 
                 val nextProductId = if (maxProductId == null) 1 else maxProductId + 1
@@ -77,7 +75,7 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
                             override fun onSubscribe(d: Disposable) {}
 
                             override fun onComplete() {
-                                addProductView.onStockAdded(context.getString(R.string.add_product_success))
+                                addProductView.onProductAdded(context.getString(R.string.add_product_success))
                                 getId()
 
                             }

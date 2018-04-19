@@ -21,11 +21,13 @@ import javax.inject.Inject
 class ProductListPresenterImpl @Inject constructor(private var context: ProductListActivity, private var productListView: ProductListView,
                                                    private var apiService: ApiService, private var appDatabase: AppDatabase) : ProductListPresenter {
 
+
     companion object {
         val TAG : String = ProductListPresenterImpl::class.java.simpleName;
     }
 
     lateinit var productListAdapter: ProductListAdapter
+    private var products = ArrayList<ProductWithStock>();
 
     override fun getProducts(context: Context) {
         productListAdapter = ProductListAdapter(context)
@@ -36,6 +38,7 @@ class ProductListPresenterImpl @Inject constructor(private var context: ProductL
                 .subscribe(object : Consumer<List<ProductWithStock>> {
                     override fun accept(t: List<ProductWithStock>) {
                         productListAdapter.updateAdapter(t)
+                        products = t as ArrayList<ProductWithStock>
                     }
                 })
 
@@ -49,5 +52,33 @@ class ProductListPresenterImpl @Inject constructor(private var context: ProductL
 //        productListAdapter.updateAdapter(realm.where(Product::class.java).findAll().toList())
 
         AppLog.e("Size", "" + productListAdapter.itemCount)
+    }
+
+    override fun resetAdapter() {
+        productListAdapter.updateAdapter(products)
+    }
+
+    override fun searchProduct(keyword: String) {
+        productListAdapter.updateAdapter(filter(keyword))
+    }
+
+    private fun filter(keyword: String): ArrayList<ProductWithStock> {
+        val tempProduct = ArrayList<ProductWithStock>()
+        if (productListAdapter != null) {
+            if (productListAdapter.itemCount > 0) {
+                for (product in products) {
+                    if (product.product!!.productName.toUpperCase().contains(keyword)) {
+                        tempProduct.add(product)
+                    }
+                }
+            }
+        }
+
+//        if (tempCourse.isEmpty())
+//            mError.setVisibility(View.VISIBLE)
+//        else
+//            mError.setVisibility(View.GONE)
+
+        return tempProduct
     }
 }

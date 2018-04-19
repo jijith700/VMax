@@ -328,12 +328,13 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         return Uri.parse(path)
     }
 
-    override fun onStockAdded(msg: String) {
+    override fun onProductAdded(msg: String) {
         Utils.showSnackBar(productImage, msg)
 
         productImage.setImageDrawable(null)
         productName.setText("")
-        purchaseDate.text = ""
+        purchaseDate.text = getString(R.string.stock_date)
+        purchaseDate.setTextColor(ContextCompat.getColor(this, R.color.colorCommonGreay))
         quantity.setText("")
         stockPrice.setText("")
         salePrice.setText("")
@@ -398,9 +399,9 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
 //    @OnClick(R.id.btn_show)
 //    fun onClickShow() {
 //        // Find the first person (no query conditions) and read a field
-//        val product = realm.where(Product::class.java).findAll()
+//        val productWithStock = realm.where(Product::class.java).findAll()
 ////        showStatus(person.name + ": " + person.age)
-//        for(pro in product) {
+//        for(pro in productWithStock) {
 //            AppLog.e(TAG, pro.productName + "img" + pro.imagePath)
 //        }
 //    }
@@ -413,12 +414,13 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         product.productName = productName.text.toString()
         stock.purchaseDate = purchaseDate.text.toString()
         product.quantity = Integer.parseInt(quantity.text.toString())
+        stock.quantity = Integer.parseInt(quantity.text.toString())
         stock.stockPrice = Integer.parseInt(stockPrice.text.toString())
         stock.salePrice = Integer.parseInt(salePrice.text.toString())
         stock.balanceStock = Integer.parseInt(quantity.text.toString())
         product.imagePath = fileName
 
-        addProductPresenter.addStock(product, stock)
+        addProductPresenter.addProduct(product, stock)
     }
 
     private val fromDateListener = DatePickerDialog.OnDateSetListener { arg0, arg1, arg2, arg3 ->

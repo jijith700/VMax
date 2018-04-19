@@ -11,6 +11,7 @@ import butterknife.BindView
 import com.jijith.vmax.R
 import com.jijith.vmax.adapter.ProductListAdapter
 import com.jijith.vmax.base.BaseFragment
+import com.jijith.vmax.models.ProductWithStock
 import com.jijith.vmax.utils.VerticalDividerItemDecoration
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -48,5 +49,13 @@ class AllProductFragment : BaseFragment(), AllProductView {
         productList.addItemDecoration(VerticalDividerItemDecoration(20, false))
         productList.itemAnimator = DefaultItemAnimator()
         productList.adapter = adapter
+    }
+
+    fun searchProduct(keyword: String) {
+        allProductPresenter.search(keyword)
+    }
+
+    fun resetAdapter() {
+        allProductPresenter.resetAdapter()
     }
 }

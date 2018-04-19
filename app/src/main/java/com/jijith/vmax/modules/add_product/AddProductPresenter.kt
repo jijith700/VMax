@@ -10,5 +10,5 @@ import com.jijith.vmax.models.Stock
 interface AddProductPresenter {
 
     fun getId()
-    fun addStock(product : Product, stock: Stock)
+    fun addProduct(product: Product, stock: Stock)
 }

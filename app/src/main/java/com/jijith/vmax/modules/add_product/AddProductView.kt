@@ -5,7 +5,7 @@ package com.jijith.vmax.modules.add_product
  */
 interface AddProductView {
 
-    fun onStockAdded(msg : String)
+    fun onProductAdded(msg: String)
     fun onError(msg: String)
 
     fun onErrorProductImage(msg : String)

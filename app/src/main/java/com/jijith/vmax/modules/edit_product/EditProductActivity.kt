@@ -365,10 +365,10 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
 
         productName.setText(product.productName)
         fileName = product.imagePath
-//        purchaseDate.setText(product)
-//        quantity.setText(product.quantity)
-//        stockPrice.setText(product.stockPrice)
-//        salePrice.setText(product.salePrice)
+//        purchaseDate.setText(productWithStock)
+//        quantity.setText(productWithStock.quantity)
+//        stockPrice.setText(productWithStock.stockPrice)
+//        salePrice.setText(productWithStock.salePrice)
 
 
     }
@@ -388,11 +388,11 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     @OnClick(R.id.btn_update)
     fun onClickUpdateProduct() {
         product.productName = productName.text.toString()
-//        product.purchaseDate = purchaseDate.text.toString()
-//        product.quantity = quantity.text.toString()
-//        product.stockPrice = stockPrice.text.toString()
-//        product.salePrice = salePrice.text.toString()
-//        product.imagePath = fileName
+//        productWithStock.purchaseDate = purchaseDate.text.toString()
+//        productWithStock.quantity = quantity.text.toString()
+//        productWithStock.stockPrice = stockPrice.text.toString()
+//        productWithStock.salePrice = salePrice.text.toString()
+//        productWithStock.imagePath = fileName
 
         editProductPresenter.editProduct(product, fileName)
     }

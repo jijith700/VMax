@@ -134,7 +134,10 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:textColor="@color/colorWhite"
                 android:id="@+id/btn_add"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"

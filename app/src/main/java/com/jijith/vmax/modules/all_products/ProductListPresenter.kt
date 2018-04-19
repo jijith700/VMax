@@ -9,4 +9,6 @@ import android.content.Context
 interface ProductListPresenter {
     fun getProducts(context: Context)
     fun updateAdapter(context: Context)
+    fun searchProduct(keyword: String)
+    fun resetAdapter()
 }

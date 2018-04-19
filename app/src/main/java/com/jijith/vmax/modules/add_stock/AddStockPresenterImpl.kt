@@ -69,8 +69,8 @@ class AddStockPresenterImpl @Inject constructor(private var context: AddStockAct
                 product.imagePath = path.toString()
 
                 stock.quantity = product.quantity
-//                stock.stockPrice = product.stockPrice
-//                stock.salePrice = product.salePrice
+//                stock.stockPrice = productWithStock.stockPrice
+//                stock.salePrice = productWithStock.salePrice
                 stock.discount = 0
 
                 val nextStockId = if (maxStockId == null) 1 else maxStockId + 1

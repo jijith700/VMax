@@ -388,9 +388,9 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 //    @OnClick(R.id.btn_show)
 //    fun onClickShow() {
 //        // Find the first person (no query conditions) and read a field
-//        val product = realm.where(Product::class.java).findAll()
+//        val productWithStock = realm.where(Product::class.java).findAll()
 ////        showStatus(person.name + ": " + person.age)
-//        for(pro in product) {
+//        for(pro in productWithStock) {
 //            AppLog.e(TAG, pro.productName + "img" + pro.imagePath)
 //        }
 //    }
@@ -400,7 +400,7 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 
         var product = products.get(productName.selectedItemPosition)
         var stock = Stock()
-//        product.productName = productName.text.toString()
+//        productWithStock.productName = productName.text.toString()
         stock.purchaseDate = purchaseDate.text.toString()
         product.quantity = Integer.parseInt(quantity.text.toString())
         stock.stockPrice = Integer.parseInt(stockPrice.text.toString())

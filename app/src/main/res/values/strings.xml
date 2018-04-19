@@ -32,8 +32,8 @@
     <string name="stock_quantity">Quantity</string>
     <string name="stock_price">Stock Price</string>
     <string name="stock_sale_price">Sale Price</string>
-    <string name="stock_add">Add New Stock</string>
-    <string name="product_add">Add New Product</string>
+    <string name="stock_add">Add Stock</string>
+    <string name="product_add">Add Product</string>
 
     <string name="tv_product_image">Add Product Image</string>
     <string name="cmenu_camera">Camera</string>
@@ -42,6 +42,10 @@
 
     <!--Edit Product Activity-->
     <string name="btn_update">Update Product</string>
+
+    <!--Check Out Activity-->
+    <string name="btn_check_out">Check Out</string>
+    <string name="menu_nominal">Nominal</string>
 
 
     <!--All Product Fragment-->
@@ -69,15 +73,27 @@
     <string name="btn_no">No</string>
     <string name="sp_select">Select Category</string>
     <string name="txt_rs">RS.\u0020%1$d</string>
+    <string name="txt_total_rs">Total RS.\u0020%1$d</string>
     <string name="txt_space">\u0020</string>
     <string name="txt_stock">Stock.\u0020%1$d</string>
     <string name="hint_search">Search</string>
     <string name="internal_storage">Internal storage</string>
     <string name="cancel">Cancel</string>
+    <string name="txt_delete">Delete</string>
 
     <string name="dir_product">Product</string>
     <string name="file_no_media">.nomedia</string>
 
+
+    <!--Check Out Adapter-->
+    <string name="txt_price_per">Price per unit</string>
+
+
+    <!--Discount Dialog Fragment-->
+    <string name="hint_name">Name</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_discount">Discount</string>
+    <string name="hint_commission">Commission</string>
 
     <!--Errors-->
     <string name="error_login">"Login Failed username or password is incorrect"</string>
@@ -85,7 +101,7 @@
     <string name="error_email">Invalid email id</string>
     <string name="error_length_pass">Password length must be greater than 6 </string>
     <string name="error_phone">Invalid phone number</string>
-    <string name="error_name">Invalid username</string>
+    <string name="error_name">Invalid customer name</string>
     <string name="error_all">You must fill all the fields</string>
     <string name="error_try_again">Please try again</string>
     <string name="error_no_result">No results found</string>

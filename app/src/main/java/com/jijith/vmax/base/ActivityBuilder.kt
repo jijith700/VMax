@@ -6,6 +6,8 @@ import com.jijith.vmax.modules.add_stock.AddStockActivity
 import com.jijith.vmax.modules.add_stock.AddStockActivityModule
 import com.jijith.vmax.modules.all_products.ProductListActivity
 import com.jijith.vmax.modules.all_products.ProductListActivityModule
+import com.jijith.vmax.modules.chekout.CheckOutActivity
+import com.jijith.vmax.modules.chekout.CheckOutActivityModule
 import com.jijith.vmax.modules.delete_product.DeleteProductActivity
 import com.jijith.vmax.modules.delete_product.DeleteProductActivityModule
 import com.jijith.vmax.modules.edit_product.EditProductActivity
@@ -13,10 +15,6 @@ import com.jijith.vmax.modules.edit_product.EditProductActivityModule
 import com.jijith.vmax.modules.home.HomeFragmentProvider
 import com.jijith.vmax.modules.home.MainActivity
 import com.jijith.vmax.modules.home.MainActivityModule
-import com.jijith.vmax.modules.home.all_products.AllProductFragment
-import com.jijith.vmax.modules.home.all_products.AllProductModule
-import com.jijith.vmax.modules.home.recent.RecentFragment
-import com.jijith.vmax.modules.home.recent.RecentModule
 import com.jijith.vmax.modules.login.LoginActivity
 import com.jijith.vmax.modules.login.LoginActivityModule
 import dagger.Module
@@ -51,6 +49,8 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = arrayOf(EditProductActivityModule::class))
     abstract fun bindEditProductActivity(): EditProductActivity
 
+    @ContributesAndroidInjector(modules = arrayOf(CheckOutActivityModule::class))
+    abstract fun bindCheckOutActivity(): CheckOutActivity
 
     /*
     * Fragments binding

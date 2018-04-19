@@ -6,11 +6,14 @@ import android.net.ConnectivityManager
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.jijith.vmax.R
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 
 /**
@@ -33,6 +36,7 @@ class Utils {
 
         fun savePreferences(context: Context, key: String, value: Boolean) {
             val sp = PreferenceManager.getDefaultSharedPreferences(context)
+
             val editor = sp.edit()
             editor.putBoolean(key, value)
             editor.apply()
@@ -148,8 +152,8 @@ class Utils {
             }
         }
 
-        fun getFolderPath(context: Context, dir : String): File {
-            var file : File? = null ;
+        fun getFolderPath(context: Context, dir: String): File {
+            var file: File? = null;
 
             try {
                 val filePath = Environment.getExternalStorageDirectory().absolutePath + File.separator + context.getString(R.string.app_name)
@@ -175,16 +179,16 @@ class Utils {
                     }
                 } else
                     file = File(filePath + File.separator + dir)
-                    return file
+                return file
             } catch (e: IOException) {
                 AppLog.e(TAG, e.toString())
                 return file!!
             }
         }
 
-        fun setBadgeCount(context : Context, icon: LayerDrawable, count: String ) {
+        fun setBadgeCount(context: Context, icon: LayerDrawable, count: String) {
 
-            val badge : BadgeDrawable
+            val badge: BadgeDrawable
 
             // Reuse drawable if possible
             val reuse = icon.findDrawableByLayerId(R.id.ic_badge)
@@ -197,8 +201,31 @@ class Utils {
             }
 
             badge.setCount(count);
-//            icon.mutate();
-//            icon.setDrawableByLayerId(R.id.ic_badge, badge);
+
+        }
+
+        fun resetBadge(context: Context, icon: LayerDrawable) {
+            icon.mutate();
+            icon.setDrawableByLayerId(R.id.ic_badge, ContextCompat.getDrawable(context, R.drawable.ic_shopping_cart));
+        }
+
+        fun getDatabasePath(context: Context) {
+            AppLog.d(TAG, context.getDatabasePath(context.getString(R.string.app_name)).absolutePath)
+        }
+
+        @Throws(IOException::class)
+        fun copyAppDbToDownloadFolder(context: Context, address: String) {
+            val filePath = Environment.getExternalStorageDirectory().absolutePath + File.separator + context.getString(R.string.app_name)
+
+            val backupDB = File(filePath, context.getString(R.string.app_name) + ".db")
+            val currentDB = context.getDatabasePath(context.getString(R.string.app_name))
+            if (currentDB.exists()) {
+                val src = FileInputStream(currentDB).channel
+                val dst = FileOutputStream(backupDB).channel
+                dst.transferFrom(src, 0, src.size())
+                src.close()
+                dst.close()
+            }
         }
     }
 }
