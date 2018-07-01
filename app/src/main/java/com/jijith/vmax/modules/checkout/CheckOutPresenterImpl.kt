@@ -1,4 +1,4 @@
-package com.jijith.vmax.modules.chekout
+package com.jijith.vmax.modules.checkout
 
 import com.jijith.vmax.R
 import com.jijith.vmax.adapter.CheckOutAdapter
@@ -81,7 +81,8 @@ class CheckOutPresenterImpl @Inject constructor(private var context: CheckOutAct
         checkOutView.onChangeTotalPrice(totalPrice)
     }
 
-    override fun checkOut(name: String, phone: String, discount: Int, commission: Int) {
+    override fun checkOut(name: String, phone: String, discount: Int, commissionPaidTo: String,
+                          commission: Int, purchaseMode: Int) {
 
         if (isValid(name, phone) && checkOutAdapter.getProducts().isNotEmpty()) {
             val products = checkOutAdapter.getProducts()
@@ -93,7 +94,7 @@ class CheckOutPresenterImpl @Inject constructor(private var context: CheckOutAct
 
             val netAmount = totalPrice - (discount + commission)
             val invoice = Invoice(++maxInvoiceId, name, phone, totalPrice,
-                    netAmount, commission, discount)
+                    netAmount, commissionPaidTo, commission, discount, purchaseMode)
 
             var salesList: List<Sales> = ArrayList()
             val calendar = Calendar.getInstance()
@@ -105,7 +106,7 @@ class CheckOutPresenterImpl @Inject constructor(private var context: CheckOutAct
                 for (stock in product.stock!!) {
                     if (product.count > stock.balanceStock) {
                         val sales = Sales(++maxSalesId, product.product!!.id, stock.id,
-                                product.product!!.productName, calendar.time.toString(), stock.quantity,
+                                product.product!!.productName, calendar.time, stock.quantity,
                                 product.stock!![product.stock!!.size - 1].salePrice, product.totalPrice)
 
                         salesList += sales
@@ -120,7 +121,7 @@ class CheckOutPresenterImpl @Inject constructor(private var context: CheckOutAct
                     } else {
                         if (remaining == 0) {
                             val sales = Sales(++maxSalesId, product.product!!.id, stock.id,
-                                    product.product!!.productName, calendar.time.toString(), stock.quantity,
+                                    product.product!!.productName, calendar.time, stock.quantity,
                                     product.stock!![product.stock!!.size - 1].salePrice, product.totalPrice)
                             salesList += sales
 
@@ -133,7 +134,7 @@ class CheckOutPresenterImpl @Inject constructor(private var context: CheckOutAct
                             break
                         } else {
                             val sales = Sales(++maxSalesId, product.product!!.id, stock.id,
-                                    product.product!!.productName, calendar.time.toString(), remaining,
+                                    product.product!!.productName, calendar.time, remaining,
                                     product.stock!![product.stock!!.size - 1].salePrice, product.totalPrice)
                             salesList += sales
 

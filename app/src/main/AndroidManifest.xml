@@ -33,8 +33,10 @@
             android:name=".modules.home.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -58,10 +60,25 @@
             android:name=".modules.edit_product.EditProductActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".modules.chekout.CheckOutActivity"
+            android:name=".modules.checkout.CheckOutActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".modules.productdetail.ProductDetailActivity"></activity>
+        <activity android:name=".modules.productdetail.ProductDetailActivity" />
+        <activity android:name=".modules.InvoiceActivity">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".bluetooth.BTDeviceList" />
+        <activity android:name=".modules.salesreport.SalesReportActivity">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

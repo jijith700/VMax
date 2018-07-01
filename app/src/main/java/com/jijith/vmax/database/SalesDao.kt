@@ -1,27 +1,32 @@
 package com.jijith.vmax.database
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
-import com.jijith.vmax.models.Product
-import com.jijith.vmax.models.ProductWithStock
+import android.arch.persistence.room.Query
 import com.jijith.vmax.models.Sales
 import io.reactivex.Flowable
 import io.reactivex.Single
+import java.util.*
 
 /**
  * Created by jijith on 4/3/18.
  */
 @Dao
-public interface SalesDao {
+interface SalesDao {
 
-    @Query("select max(id) from sales")
+    @Query("SELECT max(id) FROM sales")
     fun getItemId(): Single<Int>
 
-    @Query("select * from sales")
+    @Query("SELECT * FROM sales")
     fun getAllSalesItems(): Flowable<List<Sales>>
 
-    @Query("select * from sales where id = :id")
+    @Query("SELECT * FROM sales WHERE id = :id")
     fun getItembyId(id: String): Sales
+
+    @Query("SELECT * FROM sales WHERE saleDate BETWEEN :fromDate AND :toDate")
+    fun getSalesByDate(fromDate: Date, toDate: Date): Flowable<List<Sales>>
 
     @Insert(onConflict = REPLACE)
     fun addSales(sales: Sales)

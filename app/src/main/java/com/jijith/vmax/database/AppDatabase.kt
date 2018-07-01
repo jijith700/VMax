@@ -3,17 +3,20 @@ package com.jijith.vmax.database
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.jijith.vmax.R
 import com.jijith.vmax.models.Invoice
 import com.jijith.vmax.models.Product
 import com.jijith.vmax.models.Sales
 import com.jijith.vmax.models.Stock
+import com.jijith.vmax.utils.TimestampConverter
 
 /**
  * Created by jijith on 4/3/18.
  */
 @Database(entities = arrayOf(Product::class, Stock::class, Invoice::class, Sales::class), version = 1, exportSchema = false)
+@TypeConverters(TimestampConverter::class)
 public abstract class AppDatabase : RoomDatabase() {
 
     companion object {

@@ -44,8 +44,8 @@ class AllProductFragment : BaseFragment(), AllProductView {
     }
 
     override fun setAdapter(adapter: ProductListAdapter) {
-        val mLayoutManager : RecyclerView.LayoutManager = StaggeredGridLayoutManager(1, 1)
-        productList.layoutManager = mLayoutManager
+        val layoutManager: RecyclerView.LayoutManager = StaggeredGridLayoutManager(1, 1)
+        productList.layoutManager = layoutManager
         productList.addItemDecoration(VerticalDividerItemDecoration(20, false))
         productList.itemAnimator = DefaultItemAnimator()
         productList.adapter = adapter

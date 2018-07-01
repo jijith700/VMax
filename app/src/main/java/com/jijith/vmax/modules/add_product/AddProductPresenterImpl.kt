@@ -18,6 +18,7 @@ import java.io.IOException
 import java.nio.channels.FileChannel
 import javax.inject.Inject
 import io.reactivex.disposables.Disposable
+import java.util.*
 
 
 /**
@@ -60,8 +61,8 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
 
                 stock.discount = 0
 
-                val nextProductId = if (maxProductId == null) 1 else maxProductId + 1
-                val nextStockId = if (maxStockId == null) 1 else maxStockId + 1
+                val nextProductId = if (maxProductId == 0) 1 else maxProductId + 1
+                val nextStockId = if (maxStockId == 0) 1 else maxStockId + 1
 
                 product.id = nextProductId
                 stock.productId = nextProductId
@@ -88,7 +89,7 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
         }
     }
 
-    private fun isValid(productName: String, purchaseDate: String, quantity: Int,
+    private fun isValid(productName: String, purchaseDate: Date?, quantity: Int,
                         stockPrice: Int, salePrice: Int, imagePath: String): Boolean {
         var isValid = true
 
@@ -102,7 +103,7 @@ class AddProductPresenterImpl @Inject constructor(private var context: AddProduc
             isValid = false
         }
 
-        if (TextUtils.isEmpty(purchaseDate)) {
+        if (purchaseDate == null) {
             addProductView.onErrorPurchaseDate(context.getString(R.string.error_date))
             isValid = false
         } else if (purchaseDate.equals(context.getString(R.string.stock_date))) {

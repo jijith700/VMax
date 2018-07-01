@@ -20,7 +20,7 @@ import java.util.*
 
 class BTDeviceList : ListActivity() {
 
-//    companion object {
+    companion object {
 
     val REQUEST_CONNECT_BT = 0x2300
 
@@ -38,31 +38,35 @@ class BTDeviceList : ListActivity() {
 
     var mbtSocket: BluetoothSocket? = null
 
-//    }
+
+        fun getSocket(): BluetoothSocket {
+            return mbtSocket!!
+        }
+
+    }
 
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setTitle("Bluetooth Devices")
 
+        val btIntentFilter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        registerReceiver(mBTReceiver, btIntentFilter)
+
         try {
             if (initDevicesList() != 0) {
-                this.finish()
+                finish()
                 return
             }
 
         } catch (ex: Exception) {
-            this.finish()
+            ex.printStackTrace()
+            finish()
             return
         }
 
-        val btIntentFilter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-        registerReceiver(mBTReceiver, btIntentFilter)
-    }
 
-    public fun getSocket(): BluetoothSocket {
-        return mbtSocket!!
     }
 
     private fun flushData() {
@@ -99,6 +103,9 @@ class BTDeviceList : ListActivity() {
     private fun initDevicesList(): Int {
 
         flushData()
+        if (btDevices == null) {
+            btDevices = ArrayAdapter<BluetoothDevice>(applicationContext, android.R.layout.simple_list_item_1)
+        }
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (mBluetoothAdapter == null) {
@@ -107,11 +114,11 @@ class BTDeviceList : ListActivity() {
             return -1
         }
 
-        if (mBluetoothAdapter!!.isDiscovering()) {
-            mBluetoothAdapter!!.cancelDiscovery()
-        }
+//        if (mBluetoothAdapter!!.isDiscovering()) {
+//            mBluetoothAdapter!!.cancelDiscovery()
+//        }
 
-        mArrayAdapter = ArrayAdapter<String>(getApplicationContext(),
+        mArrayAdapter = ArrayAdapter(this,
                 android.R.layout.simple_list_item_1)
 
         setListAdapter(mArrayAdapter)
@@ -121,6 +128,7 @@ class BTDeviceList : ListActivity() {
         try {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
         } catch (ex: Exception) {
+            ex.printStackTrace()
             return -2
         }
 
@@ -131,7 +139,7 @@ class BTDeviceList : ListActivity() {
 
     }
 
-    override fun onActivityResult(reqCode: Int, resultCode: Int, intent: Intent) {
+    override fun onActivityResult(reqCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(reqCode, resultCode, intent)
 
         when (reqCode) {
@@ -142,34 +150,34 @@ class BTDeviceList : ListActivity() {
                     try {
                         if (btDeviceList.size > 0) {
                             for (device in btDeviceList) {
-                                if (!btDeviceList.contains(device)) {
+//                                if (btDeviceList.contains(device) == false) {
 
                                     btDevices!!.add(device)
 
                                     mArrayAdapter!!.add(device.getName() + "\n" + device.getAddress())
                                     mArrayAdapter!!.notifyDataSetInvalidated()
-                                }
+//                                }
                             }
                         }
                     } catch (ex: Exception) {
+                        ex.printStackTrace()
                     }
                 }
             }
         }
 
         mBluetoothAdapter!!.startDiscovery()
-
     }
 
     val mBTReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             val action = intent!!.action
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                val device: BluetoothDevice = intent!!.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+                val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
 
                 try {
                     if (btDevices == null) {
-                        btDevices = ArrayAdapter(getApplicationContext(), android.R.id.text1)
+                        btDevices = ArrayAdapter<BluetoothDevice>(applicationContext, android.R.layout.simple_list_item_1)
                     }
 
                     if (btDevices!!.getPosition(device) < 0) {
@@ -220,7 +228,7 @@ class BTDeviceList : ListActivity() {
                     try {
                         mbtSocket!!.close()
                     } catch (e: IOException) {
-// e.printStackTrace()
+                        e.printStackTrace()
                     }
                     mbtSocket = null
                     return

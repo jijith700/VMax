@@ -13,15 +13,15 @@ import io.reactivex.Single
  * Created by jijith on 4/3/18.
  */
 @Dao
-public interface InvoiceDao {
+interface InvoiceDao {
 
-    @Query("select max(id) from invoice")
+    @Query("SELECT max(id) FROM invoice")
     fun getItemId(): Single<Int>
 
-    @Query("select * from invoice")
+    @Query("SELECT * FROM invoice")
     fun getAllInvoiceItems(): Flowable<List<Invoice>>
 
-    @Query("select * from invoice where id = :id")
+    @Query("SELECT * FROM invoice WHERE id = :id")
     fun getItembyId(id: String): Invoice
 
     @Insert(onConflict = REPLACE)

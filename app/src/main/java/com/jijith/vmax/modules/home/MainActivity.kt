@@ -26,10 +26,11 @@ import com.jijith.vmax.models.ProductWithStock
 import com.jijith.vmax.modules.add_product.AddProductActivity
 import com.jijith.vmax.modules.add_stock.AddStockActivity
 import com.jijith.vmax.modules.all_products.ProductListActivity
-import com.jijith.vmax.modules.chekout.CheckOutActivity
+import com.jijith.vmax.modules.checkout.CheckOutActivity
 import com.jijith.vmax.modules.delete_product.DeleteProductActivity
 import com.jijith.vmax.modules.home.all_products.AllProductFragment
 import com.jijith.vmax.modules.home.recent.RecentFragment
+import com.jijith.vmax.modules.salesreport.SalesReportActivity
 import com.jijith.vmax.utils.AppLog
 import com.jijith.vmax.utils.Constants
 import com.jijith.vmax.utils.Utils
@@ -186,7 +187,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 startActivity(intentStock)
             }
             R.id.nav_edit_stock -> {
-
+                val intentSales = Intent(this, SalesReportActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intentSales)
             }
             R.id.nav_delete_stock -> {
 

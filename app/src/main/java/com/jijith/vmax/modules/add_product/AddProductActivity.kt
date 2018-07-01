@@ -31,7 +31,6 @@ import com.jijith.vmax.models.Stock
 import com.jijith.vmax.utils.*
 import com.squareup.picasso.Picasso
 import dagger.android.AndroidInjection
-import okhttp3.MultipartBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -47,9 +46,9 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         val TAG = AddProductActivity::class.java.simpleName
     }
 
-    internal val REQUEST_PICK_IMAGE = 83
-    internal val REQUEST_IMAGE_CAPTURE = 84
-    internal val REQUEST_PERMISSION = 100
+    private val REQUEST_PICK_IMAGE = 83
+    private val REQUEST_IMAGE_CAPTURE = 84
+    private val REQUEST_PERMISSION = 100
 
     @BindView(R.id.layout_product_image)
     lateinit var layoutProductImage: RelativeLayout
@@ -81,7 +80,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
     internal var bitmap: Bitmap? = null
 
     internal var fromDatePicker: DatePickerDialog? = null
-    internal var fromDate: Long? = null
+    internal var fromDate: Date? = null
 
     @Inject
     lateinit var addProductPresenter: AddProductPresenter
@@ -97,7 +96,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_add_stock)
-        AndroidInjection.inject(this);
+        AndroidInjection.inject(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -108,8 +107,8 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         fromDatePicker = DatePickerDialog(this, fromDateListener,
                 calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
-        var millis = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                .parse("2018/01/01 00:00:00").time;
+        val millis = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
+                .parse("2018/01/01 00:00:00").time
 
         try {
             fromDatePicker?.getDatePicker()?.setMaxDate(Calendar.getInstance().timeInMillis)
@@ -172,12 +171,12 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
                     return
                 }
 
-                val fileBody = RequestBodyProgress(filePath!!, this)
+//                val fileBody = RequestBodyProgress(filePath!!, this)
 
                 //                RequestBody tokenBody = RequestBody.create(okhttp3.MultipartBody.FORM, token);
                 //                RequestBody tokenBody = RequestBody.create(MediaType.parse("text/plain"), new String(token));
                 //                MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", new File(imageUri.getPath()).getName(), RequestBody.create(MediaType.parse("image/*"), fileBody));
-                val body = MultipartBody.Part.createFormData("file", filePath.getName(), fileBody)
+//                val body = MultipartBody.Part.createFormData("file", filePath.getName(), fileBody)
 
 //                productImage.setImageBitmap(bitmap)
 
@@ -226,13 +225,13 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
                     return
                 }
 
-                val fileBody = RequestBodyProgress(filePath!!, this)
+//                val fileBody = RequestBodyProgress(filePath!!, this)
 
                 //                RequestBody tokenBody = RequestBody.create(okhttp3.MultipartBody.FORM, token);
 
                 //                RequestBody tokenBody = RequestBody.create(MediaType.parse("text/plain"), new String(token));
                 //                MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", new File(imageUri.getPath()).getName(), RequestBody.create(MediaType.parse("image/*"), fileBody));
-                val body = MultipartBody.Part.createFormData("file", filePath.getName(), fileBody)
+//                val body = MultipartBody.Part.createFormData("file", filePath.getName(), fileBody)
 
 //                productImage.setImageBitmap(bitmap)
 
@@ -278,7 +277,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         menu!!.add(0, v!!.id, 0, getString(R.string.cmenu_camera))//groupId, itemId, order, title
-        menu!!.add(0, v!!.id, 0, getString(R.string.cmenu_gallery))
+        menu.add(0, v.id, 0, getString(R.string.cmenu_gallery))
 
     }
 
@@ -412,7 +411,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         var product = Product()
         var stock = Stock()
         product.productName = productName.text.toString()
-        stock.purchaseDate = purchaseDate.text.toString()
+        stock.purchaseDate = fromDate
         product.quantity = Integer.parseInt(quantity.text.toString())
         stock.quantity = Integer.parseInt(quantity.text.toString())
         stock.stockPrice = Integer.parseInt(stockPrice.text.toString())
@@ -434,7 +433,7 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         val date = arg1.toString() + "-" + arg2 + "-" + arg3
 
         try {
-            fromDate = SimpleDateFormat("yyyy-MM-dd").parse(date).time
+            fromDate = SimpleDateFormat("yyyy-MM-dd").parse(date)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -449,5 +448,6 @@ class AddProductActivity : BaseActivity(), AddProductView, RequestBodyProgress.U
         purchaseDate.setText(date)
         purchaseDate.setTextColor(ContextCompat.getColor(this, R.color.colorBlack))
     }
+
 
 }

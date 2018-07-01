@@ -47,6 +47,13 @@
     <string name="btn_check_out">Check Out</string>
     <string name="menu_nominal">Nominal</string>
 
+    <!--InvoiceActivity-->
+    <string name="txt_invoice">Invoice</string>
+
+    <!--SalesReportActivity-->
+    <string name="txt_from_date">From</string>
+    <string name="txt_to_date">To</string>
+
 
     <!--All Product Fragment-->
     <string name="fragment_all_product">All Product Fragment</string>
@@ -88,12 +95,20 @@
     <!--Check Out Adapter-->
     <string name="txt_price_per">Price per unit</string>
 
+    <!--Stock Adapter-->
+    <string name="balance_quantity">Balance Quantity</string>
+
 
     <!--Discount Dialog Fragment-->
     <string name="hint_name">Name</string>
     <string name="hint_phone">Phone</string>
-    <string name="hint_discount">Discount</string>
-    <string name="hint_commission">Commission</string>
+    <string name="hint_discount">Discount Amount</string>
+    <string name="hint_commission">Commission Amount</string>
+    <string name="hint_commission_paid">Commission Paid To</string>
+    <array name="purchase_mode">
+        <item>Cash</item>
+        <item>Credit</item>
+    </array>
 
     <!--Errors-->
     <string name="error_login">"Login Failed username or password is incorrect"</string>

@@ -1,4 +1,4 @@
-package com.jijith.vmax.modules.chekout
+package com.jijith.vmax.modules.checkout
 
 import com.jijith.vmax.adapter.CheckOutAdapter
 
@@ -9,7 +9,9 @@ interface CheckOutView {
 
     fun setAdapter(adapter: CheckOutAdapter)
     fun onChangeTotalPrice(price: Int)
-    fun onChangeCustomerDetails(name: String, phone: String, discount: Int, commission: Int)
+    fun onChangeCustomerDetails(name: String, phone: String, discount: Int,
+                                commissionPaidTo: String, commission: Int, purchaseMode: Int)
+
     fun onCompleteCheckOut()
 
     fun onErrorName(msg: String)

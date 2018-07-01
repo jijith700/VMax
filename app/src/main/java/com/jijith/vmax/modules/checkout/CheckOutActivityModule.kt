@@ -1,4 +1,4 @@
-package com.jijith.vmax.modules.chekout
+package com.jijith.vmax.modules.checkout
 
 import com.jijith.vmax.api.ApiService
 import com.jijith.vmax.database.AppDatabase

@@ -11,19 +11,19 @@ import io.reactivex.Single
  * Created by jijith on 4/3/18.
  */
 @Dao
-public interface ProductDao {
+interface ProductDao {
 
-    @Query("select max(id) from productWithStock")
+    @Query("SELECT max(id) FROM product")
     fun getItemId() : Single<Int>
 
-    @Query("select * from productWithStock")
+    @Query("SELECT * FROM product")
     fun getAllProductItems(): Flowable<List<Product>>
 
-    @Query("select * from productWithStock where id = :id")
+    @Query("SELECT * FROM product WHERE id = :id")
     fun getItembyId(id: String): Product
 
     @Transaction
-    @Query("select * from productWithStock")
+    @Query("SELECT * FROM product")
     fun getProductWithStock(): Flowable<List<ProductWithStock>>
 
     @Insert(onConflict = REPLACE)

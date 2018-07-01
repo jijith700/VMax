@@ -13,12 +13,11 @@ import butterknife.ButterKnife
 import com.jijith.numberbutton.NumberButton
 import com.jijith.vmax.R
 import com.jijith.vmax.models.ProductWithStock
-import com.jijith.vmax.modules.chekout.CheckOutPresenterImpl
+import com.jijith.vmax.modules.checkout.CheckOutPresenterImpl
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import java.io.File
-import android.content.ClipData.Item
 
 
 /**

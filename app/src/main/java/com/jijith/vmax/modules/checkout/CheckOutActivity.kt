@@ -1,4 +1,4 @@
-package com.jijith.vmax.modules.chekout
+package com.jijith.vmax.modules.checkout
 
 import android.graphics.Color
 import android.os.Bundle
@@ -51,7 +51,7 @@ class CheckOutActivity : BaseActivity(), CheckOutView, RecyclerItemTouchHelper.R
 
     override fun onCompleteCheckOut() {
         AppLog.d(TAG!!, "Sales Completed...")
-        Utils.Companion.savePreferences(this, Constants.CHECK_OUT, true)
+        Utils.savePreferences(this, Constants.CHECK_OUT, true)
 
     }
 
@@ -75,7 +75,9 @@ class CheckOutActivity : BaseActivity(), CheckOutView, RecyclerItemTouchHelper.R
     private var name: String = ""
     private var phone: String = ""
     private var discount: Int = 0
+    private var commissionPaidTo: String = ""
     private var commission: Int = 0
+    private var purchaseMode: Int = 0
 
     override fun getLayout(): Int {
         return R.layout.activity_check_out
@@ -129,11 +131,16 @@ class CheckOutActivity : BaseActivity(), CheckOutView, RecyclerItemTouchHelper.R
         totalPrice.text = String.format(getString(R.string.txt_total_rs), price)
     }
 
-    override fun onChangeCustomerDetails(name: String, phone: String, discount: Int, commission: Int) {
+    override fun onChangeCustomerDetails(name: String, phone: String, discount: Int, commissionPaidTo: String,
+                                         commission: Int, purchaseMode: Int) {
         this.name = name
         this.phone = phone
         this.discount = discount
+        this.commissionPaidTo = commissionPaidTo
         this.commission = commission
+        this.purchaseMode = purchaseMode
+
+        checkOutPresenter.checkOut(name, phone, discount, commissionPaidTo, commission, purchaseMode)
     }
 
     override fun onErrorName(msg: String) {
@@ -157,7 +164,7 @@ class CheckOutActivity : BaseActivity(), CheckOutView, RecyclerItemTouchHelper.R
 
     @OnClick(R.id.btn_check_out)
     fun onClickCheckOut() {
-        checkOutPresenter.checkOut(name, phone, discount, commission)
+        checkOutPresenter.checkOut(name, phone, discount, commissionPaidTo, commission, purchaseMode)
 
     }
 }

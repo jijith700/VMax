@@ -22,6 +22,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.channels.FileChannel
+import java.util.*
 import javax.inject.Inject
 
 
@@ -61,12 +62,8 @@ class AddStockPresenterImpl @Inject constructor(private var context: AddStockAct
 
     override fun addStock(product: Product, stock: Stock) {
         if (isValid(product.productName, stock.purchaseDate, product.quantity,
-                        stock.stockPrice, stock.salePrice, product.imagePath)) {
+                        stock.stockPrice, stock.salePrice)) {
             if (Utils.hasAppFolder(context)) {
-                val path = File(Utils.getFolderPath(context, context.getString(R.string.dir_product)).toString() + File.separator + product.productName + ".jpg")
-                copyFile(File(product.imagePath), path)
-
-                product.imagePath = path.toString()
 
                 stock.quantity = product.quantity
 //                stock.stockPrice = productWithStock.stockPrice
@@ -99,21 +96,16 @@ class AddStockPresenterImpl @Inject constructor(private var context: AddStockAct
         }
     }
 
-    private fun isValid(productName: String, purchaseDate: String, quantity: Int,
-                        stockPrice: Int, salePrice: Int, imagePath: String): Boolean {
+    private fun isValid(productName: String, purchaseDate: Date?, quantity: Int,
+                        stockPrice: Int, salePrice: Int): Boolean {
         var isValid = true
-
-        if (TextUtils.isEmpty(imagePath)) {
-            addStockView.onErrorProductImage(context.getString(R.string.error_image))
-            isValid = false
-        }
 
         if (TextUtils.isEmpty(productName)) {
             addStockView.onErrorStockName(context.getString(R.string.error_field))
             isValid = false
         }
 
-        if (TextUtils.isEmpty(purchaseDate)) {
+        if (purchaseDate == null) {
             addStockView.onErrorPurchaseDate(context.getString(R.string.error_date))
             isValid = false
         } else if (purchaseDate.equals(context.getString(R.string.stock_date))) {

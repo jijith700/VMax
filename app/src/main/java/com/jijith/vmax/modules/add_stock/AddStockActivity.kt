@@ -45,9 +45,9 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
         val TAG = AddStockActivity::class.java.simpleName
     }
 
-    internal val REQUEST_PICK_IMAGE = 83
-    internal val REQUEST_IMAGE_CAPTURE = 84
-    internal val REQUEST_PERMISSION = 100
+    private val REQUEST_PICK_IMAGE = 83
+    private val REQUEST_IMAGE_CAPTURE = 84
+    private val REQUEST_PERMISSION = 100
 
 //    @BindView(R.id.layout_product_image) lateinit var layoutProductImage: RelativeLayout
 //    @BindView(R.id.iv_product) lateinit var productImage: ImageView
@@ -67,7 +67,7 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 //    internal var bitmap: Bitmap? = null
 
     internal var fromDatePicker: DatePickerDialog? = null
-    internal var fromDate: Long? = null
+    internal var fromDate: Date? = null
 
     @Inject lateinit var addStockPresenter: AddStockPresenter
 
@@ -319,10 +319,8 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
     }
 
     override fun onStockAdded(msg: String) {
-//        Utils.showSnackBar(productImage, msg)
-//
-//        productImage.setImageDrawable(null)
-//        productName.setText("")
+        Utils.showSnackBar(purchaseDate, msg)
+
         purchaseDate.text = ""
         quantity.setText("")
         stockPrice.setText("")
@@ -330,7 +328,7 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
 
 //        productName.requestFocus()
 
-        Utils.savePreferences(this, Constants.PRODUCT_CHANGED, true)
+//        Utils.savePreferences(this, Constants.PRODUCT_CHANGED, true)
 
     }
 
@@ -401,7 +399,7 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
         var product = products.get(productName.selectedItemPosition)
         var stock = Stock()
 //        productWithStock.productName = productName.text.toString()
-        stock.purchaseDate = purchaseDate.text.toString()
+        stock.purchaseDate = fromDate
         product.quantity = Integer.parseInt(quantity.text.toString())
         stock.stockPrice = Integer.parseInt(stockPrice.text.toString())
         stock.salePrice = Integer.parseInt(salePrice.text.toString())
@@ -421,7 +419,7 @@ class AddStockActivity : BaseActivity(), AddStockView, RequestBodyProgress.Uploa
         val date = arg1.toString() + "-" + arg2 + "-" + arg3
 
         try {
-            fromDate = SimpleDateFormat("yyyy-MM-dd").parse(date).time
+            fromDate = SimpleDateFormat("yyyy-MM-dd").parse(date)
         } catch (e: ParseException) {
             e.printStackTrace()
         }

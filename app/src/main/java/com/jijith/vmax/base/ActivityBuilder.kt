@@ -6,8 +6,8 @@ import com.jijith.vmax.modules.add_stock.AddStockActivity
 import com.jijith.vmax.modules.add_stock.AddStockActivityModule
 import com.jijith.vmax.modules.all_products.ProductListActivity
 import com.jijith.vmax.modules.all_products.ProductListActivityModule
-import com.jijith.vmax.modules.chekout.CheckOutActivity
-import com.jijith.vmax.modules.chekout.CheckOutActivityModule
+import com.jijith.vmax.modules.checkout.CheckOutActivity
+import com.jijith.vmax.modules.checkout.CheckOutActivityModule
 import com.jijith.vmax.modules.delete_product.DeleteProductActivity
 import com.jijith.vmax.modules.delete_product.DeleteProductActivityModule
 import com.jijith.vmax.modules.edit_product.EditProductActivity
@@ -17,6 +17,10 @@ import com.jijith.vmax.modules.home.MainActivity
 import com.jijith.vmax.modules.home.MainActivityModule
 import com.jijith.vmax.modules.login.LoginActivity
 import com.jijith.vmax.modules.login.LoginActivityModule
+import com.jijith.vmax.modules.productdetail.ProductDetailActivity
+import com.jijith.vmax.modules.productdetail.ProductDetailActivityModule
+import com.jijith.vmax.modules.salesreport.SalesReportActivity
+import com.jijith.vmax.modules.salesreport.SalesReportActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -26,31 +30,37 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class,
-            HomeFragmentProvider::class))
+    @ContributesAndroidInjector(modules = [MainActivityModule::class,
+        HomeFragmentProvider::class])
     internal abstract fun bindMainActivity(): MainActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(LoginActivityModule::class))
+    @ContributesAndroidInjector(modules = [LoginActivityModule::class])
     abstract fun bindLoginActivity(): LoginActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(AddProductActivityModule::class))
+    @ContributesAndroidInjector(modules = [AddProductActivityModule::class])
     abstract fun bindAddProductActivity(): AddProductActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(AddStockActivityModule::class))
+    @ContributesAndroidInjector(modules = [AddStockActivityModule::class])
     abstract fun bindAddStockActivity(): AddStockActivity
 
 
-    @ContributesAndroidInjector(modules = arrayOf(DeleteProductActivityModule::class))
+    @ContributesAndroidInjector(modules = [DeleteProductActivityModule::class])
     abstract fun bindDeleteProductActivity(): DeleteProductActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(ProductListActivityModule::class))
+    @ContributesAndroidInjector(modules = [ProductListActivityModule::class])
     abstract fun bindProductListActivity(): ProductListActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(EditProductActivityModule::class))
+    @ContributesAndroidInjector(modules = [EditProductActivityModule::class])
     abstract fun bindEditProductActivity(): EditProductActivity
 
-    @ContributesAndroidInjector(modules = arrayOf(CheckOutActivityModule::class))
+    @ContributesAndroidInjector(modules = [CheckOutActivityModule::class])
     abstract fun bindCheckOutActivity(): CheckOutActivity
+
+    @ContributesAndroidInjector(modules = [ProductDetailActivityModule::class])
+    abstract fun bindProductDetailActivity(): ProductDetailActivity
+
+    @ContributesAndroidInjector(modules = [SalesReportActivityModule::class])
+    abstract fun bindSalesReportActivity(): SalesReportActivity
 
     /*
     * Fragments binding

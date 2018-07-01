@@ -11,21 +11,24 @@ import io.reactivex.Single
  * Created by jijith on 4/3/18.
  */
 @Dao
-public interface StockDao {
+interface StockDao {
 
-    @Query("select max(id) from stock")
+    @Query("SELECT max(id) FROM stock")
     fun getItemId(): Single<Int>
 
-    @Query("select * from stock")
+    @Query("SELECT * FROM stock")
     fun getAllStockItems(): Flowable<List<Stock>>
 
-    @Query("select * from stock where id = :id")
+    @Query("SELECT * FROM stock WHERE isClosed = :isClosed")
+    fun getAllStockItems(isClosed: Boolean): Flowable<List<Stock>>
+
+    @Query("SELECT * FROM stock WHERE id = :id")
     fun getItembyId(id: String): Stock
 
-    @Query("update stock set balanceStock  = :balanceStock where id = :id")
+    @Query("UPDATE stock SET balanceStock  = :balanceStock WHERE id = :id")
     fun update(balanceStock: Int, id: Int)
 
-    @Query("update stock set balanceStock  = :balanceStock, isClosed = :isClosed where id = :id")
+    @Query("UPDATE stock SET balanceStock  = :balanceStock, isClosed = :isClosed WHERE id = :id")
     fun update(balanceStock: Int, isClosed: Boolean, id: Int)
 
     @Update

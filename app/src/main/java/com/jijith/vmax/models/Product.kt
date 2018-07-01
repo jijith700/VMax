@@ -12,7 +12,7 @@ import android.R.attr.name
  * Created by jijith on 1/23/18.
  */
 
-@Entity(tableName = "productWithStock")
+@Entity(tableName = "product")
 class Product() : Parcelable {
 
         @PrimaryKey(autoGenerate = true)

@@ -64,7 +64,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
 //    @BindView(R.id.tiet_stock_price) lateinit var stockPrice: TextInputEditText
 //    @BindView(R.id.tiet_sale_price) lateinit var salePrice: TextInputEditText
 
-//    @BindView(R.id.tv_date) lateinit var purchaseDate: TextView
+//    @BindView(R.id.tv_date) lateinit var startDate: TextView
 
 //    internal var bitmap: Bitmap? = null
 
@@ -365,7 +365,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
 
         productName.setText(product.productName)
         fileName = product.imagePath
-//        purchaseDate.setText(productWithStock)
+//        startDate.setText(productWithStock)
 //        quantity.setText(productWithStock.quantity)
 //        stockPrice.setText(productWithStock.stockPrice)
 //        salePrice.setText(productWithStock.salePrice)
@@ -388,7 +388,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
     @OnClick(R.id.btn_update)
     fun onClickUpdateProduct() {
         product.productName = productName.text.toString()
-//        productWithStock.purchaseDate = purchaseDate.text.toString()
+//        productWithStock.startDate = startDate.text.toString()
 //        productWithStock.quantity = quantity.text.toString()
 //        productWithStock.stockPrice = stockPrice.text.toString()
 //        productWithStock.salePrice = salePrice.text.toString()
@@ -420,7 +420,7 @@ class EditProductActivity : BaseActivity(), EditProductView, RequestBodyProgress
             Log.e(AddProductActivity.TAG, e.toString())
         }
 
-//        purchaseDate.setText(date)
+//        startDate.setText(date)
     }
 
 }

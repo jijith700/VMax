@@ -37,6 +37,9 @@ class Constants {
 
         val CHECK_OUT = "checkOut"
 
+
+        val TIME_STAM_FORMAT = "yyyy-MM-dd"
+
     }
 
 }

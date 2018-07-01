@@ -9,12 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.jijith.vmax.R
-import com.jijith.vmax.modules.chekout.CheckOutView
+import com.jijith.vmax.modules.checkout.CheckOutView
 import com.jijith.vmax.utils.AppLog
+import java.util.*
 
 class DiscountDialogFragment : AppCompatDialogFragment() {
 
@@ -26,12 +29,17 @@ class DiscountDialogFragment : AppCompatDialogFragment() {
     lateinit var discount: TextInputEditText
     @BindView(R.id.tiet_commission)
     lateinit var commission: TextInputEditText
+    @BindView(R.id.tiet_commission_paid)
+    lateinit var commissionPaid: TextInputEditText
+    @BindView(R.id.sp_purchase_mode)
+    lateinit var purchaseMode: Spinner
 
     private lateinit var checkOutView: CheckOutView
 
     private var clientName: String = "";
     private var clientPhone: String = "";
     private var discountAmount: Int = 0;
+    private var commissionPaidTo: String = "";
     private var commissionAmount: Int = 0;
 
 
@@ -65,6 +73,9 @@ class DiscountDialogFragment : AppCompatDialogFragment() {
         val btnOk = view.findViewById<Button>(R.id.btn_ok)
         btnOk.setOnClickListener(okHandler)
 
+        val mode = ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.purchase_mode))
+        purchaseMode.adapter = mode
+
     }
 
     private var okHandler: View.OnClickListener = View.OnClickListener {
@@ -84,12 +95,17 @@ class DiscountDialogFragment : AppCompatDialogFragment() {
         else
             discountAmount = 0
 
+        if (!commissionPaid.text.isNullOrBlank())
+            commissionPaidTo = commissionPaid.getText().toString()
+        else
+            commissionPaidTo = ""
+
         if (!commission.text.isNullOrBlank())
             commissionAmount = Integer.parseInt(commission.getText().toString())
         else
             commissionAmount = 0
 
-        checkOutView!!.onChangeCustomerDetails(clientName, clientPhone, discountAmount, commissionAmount)
+        checkOutView.onChangeCustomerDetails(clientName, clientPhone, discountAmount, commissionPaidTo, commissionAmount, purchaseMode.selectedItemPosition)
 
         dismiss()
 
